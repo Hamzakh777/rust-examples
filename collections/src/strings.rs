@@ -60,4 +60,6 @@ pub fn testing_string() {
     // ===========
     // Unicode Scalar values can be made up of more than 1 byte.
 
+    // There are other methods like `contains` and `replace` which are implemented under the String type
+
 }

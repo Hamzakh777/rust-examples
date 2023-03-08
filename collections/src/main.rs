@@ -9,10 +9,12 @@
 
 mod vectors;
 mod strings;
+mod hash_maps;
 
 fn main() {
     println!("Starting program execution");
     vectors::testing_vectors();
     strings::testing_string();
+    hash_maps::testing_hash_maps();
 }
 
