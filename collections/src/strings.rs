@@ -16,7 +16,7 @@ pub fn testing_string() {
     // push_str doesn't take ownership, it takes a string slice &str
     
     // we can add a single character using push
-    s.push('d')
+    s.push('d');
 
     // we can concatenate two strings
     let concatenated = s3 + &s2; // s3 has been moved here and can no longer be used
