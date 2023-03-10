@@ -12,7 +12,7 @@ pub fn demo() {
 
 struct Point<T, U> {
     x: T,
-    y: T,
+    y: U,
 }
 
 // we have to declare `T` just after `impl` so we can use `T` to specify that we're
