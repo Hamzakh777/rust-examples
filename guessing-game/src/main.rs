@@ -3,8 +3,6 @@ use rand::Rng;
 use std::cmp::Ordering;
 
 fn main() {
-    println!("Hello, world!");
-
     let secret_number = rand::thread_rng().gen_range(1..=100);
 
     loop {
@@ -46,4 +44,31 @@ fn main() {
     }
 
     // this is called shadowing. This is used a lot of converting a value from one type to another
+}
+
+// ======== BETTER ERROR HANDLING 
+// We can create a custom type and add the validations
+// in a function to create an instance of the type rather than 
+// repeating the validation everywhere
+pub struct Guess {
+    // this is private by default
+    // everyone will be forced to use Guess:new to create a new instance
+    // hence enforcing the check
+    value: i32,
+}
+
+impl Guess {
+    pub fn new(value: i32) -> Self {
+        if value < 1 || value > 100 {
+            panic!("Guess value must be between 1 and 100, got {}.", value);
+        }
+
+        Guess {
+            value
+        }
+    }
+
+    pub fn value(&self) -> i32 {
+        self.value
+    }
 }
