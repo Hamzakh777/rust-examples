@@ -69,7 +69,7 @@ impl Summary for Tweet {
 // We can use traits to define functions
 // that accept many different types as long as they implement that trait
 
-// This is syntactic sugar for something called `trait bouding syntax`
+// This is syntactic sugar for something called `trait bounding syntax`
 pub fn notify(item: &impl Summary) {
     println!("Breaking news! {}", item.summarize());
 }
