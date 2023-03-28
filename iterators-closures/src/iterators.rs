@@ -54,6 +54,11 @@ fn iterator_adaptors() {
 // Many **iterator adapters** take closures as arguments
 // https://doc.rust-lang.org/stable/book/ch13-02-iterators.html?search=#using-closures-that-capture-their-environment
 
+// ===== Choosing between iterators and loops 
+// Most Rust programmers prefer to use the iterator style
+// Iterators are faster than loops, they are one of Rusts `zero-cost abstractions`
+// https://doc.rust-lang.org/stable/book/ch13-04-performance.html
+
 #[cfg(test)]
 mod test {
     use super::*;
