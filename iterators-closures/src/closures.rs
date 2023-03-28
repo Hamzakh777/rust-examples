@@ -1,5 +1,6 @@
 // Closures are anonymous functions that can be saved in a variable or passed as an argument to other functions
 // Unlike functions, they capture values from the scope in which they're defined.
+// Functions can't access variables defined outside their scope.
 
 use std::{thread, time::Duration};
 
