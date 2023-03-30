@@ -40,3 +40,9 @@ pub mod utils {
 
 ## Cargo workspaces
 A workspace is a set of packages that share the same `Cargo.toml` and output directory.
+
+## Installing Binaries with `cargo install`
+You can install and use binary crates locally. You can only install packages that have a binary target
+
+## Extending cargo with custom commands
+https://doc.rust-lang.org/stable/book/ch14-05-extending-cargo.html
