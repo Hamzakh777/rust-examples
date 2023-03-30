@@ -24,3 +24,19 @@ Commonly used sections inlude: `Examples`, `Panics`, `Errors` and `Safety`.
 `//!` adds documentation to the item contains the comment not the item following the comment (like the crate itself)
 
 #### Exporting a convenient public API with `pub use`
+its essentially re-exporting deeply nested modules from the top level module, similar to js `export * from './[filehere]`.
+The moduel structure of a crate is more relevant to the developers working on it compared to the ones consuming it.
+```
+pub use self::kinds::mix;
+
+pub mod kinds {
+    -- snip --
+}
+
+pub mod utils {
+    -- snip --
+}
+```
+
+## Cargo workspaces
+A workspace is a set of packages that share the same `Cargo.toml` and output directory.
