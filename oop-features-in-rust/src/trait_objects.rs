@@ -1,4 +1,4 @@
-// We will be a GUi that calls a method draw on an object
+// We will build a GUI that calls a method draw on an object
 // In oop we would use inheritance by defining a parent class
 // named `Component` that has the draw function implemented. 
 // And then the sub-classes (Input, Image) will inherit it.
