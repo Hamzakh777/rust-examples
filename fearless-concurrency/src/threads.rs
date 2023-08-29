@@ -1,7 +1,7 @@
 // Each thread had its own Stack, Registers and Program Counters
 // A process has multiple threads
 // Each process has its own memory and address space, one process cannot corrupt other process's memory,
-// this means when one process mall functions other processes keep running
+// this means when one process malfunctions other processes keep running
 // The threads do share the same memory under the Process
 
 // Rust standard library uses 1:1 model of thread implementation, whereby a program uses one operating system
