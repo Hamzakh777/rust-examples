@@ -4,7 +4,7 @@ type Job = Box<dyn FnOnce() + Send + 'static>;
 
 pub struct ThreadPool {
     workers: Vec<Worker>,
-    sender: mpsc::Sender<Job>,
+    sender: Option<mpsc::Sender<Job>>,
 }
 
 impl ThreadPool {
@@ -38,7 +38,7 @@ impl ThreadPool {
 
         Self {
             workers,
-            sender,
+            sender: Some(sender),
         }
     }
 
@@ -52,13 +52,29 @@ impl ThreadPool {
     {
         let job = Box::new(f);
 
-        self.sender.send(job).unwrap();
+        self.sender.as_ref().unwrap().send(job).unwrap();
+    }
+}
+
+impl Drop for ThreadPool {
+    fn drop(&mut self) {
+        drop(self.sender.take());
+        // we use &mut because self is a mutable reference and we also need to be able to mutate worker
+        for worker in &mut self.workers {
+            println!("Shutting down worker {}", worker.id);
+
+            if let Some(thread) = worker.thread.take() {
+                thread.join().unwrap();
+            }
+        }
     }
 }
 
 struct Worker {
     id: usize,
-    thread: thread::JoinHandle<()>
+    // we are using Option so we can move the thread out of the worker instance when calling
+    // `thread.join()` as `join` consumes the thread.
+    thread: Option<thread::JoinHandle<()>>
 }
 
 // we want Worker to fetch the code to run from a queue under ThreadPool
@@ -73,16 +89,24 @@ impl Worker {
         // in short: `let` drops any temporary values by the end of expression. 
         // `if let`, `while let` and `match` does not drop temporary values until the end of the associated block.
         let thread = thread::spawn(move || loop {
-            let job = receiver.lock().unwrap().recv().unwrap();
+            let message = receiver.lock().unwrap().recv();
 
-            println!("Worker {id} got a job");
+            match message {
+                Ok(job) => {
+                    println!("Worker {id} got a job; executing");
 
-            job();
+                    job();
+                }
+                Err(_) => {
+                    println!("Worker {id} disconnected; shutting down.");
+                    break;
+                }
+            }
         });
 
         Self {
             id,
-            thread
+            thread: Some(thread)
         }
     }
 }
